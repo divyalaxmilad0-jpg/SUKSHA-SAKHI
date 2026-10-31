@@ -1,0 +1,605 @@
+
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Suraksha Sakhi — Project Report</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #1f2328;
+    background: #ffffff;
+  }
+  .page { max-width: 760px; margin: 0 auto; padding: 2.5rem 2rem 3rem; }
+
+  /* ── COVER ── */
+  .cover {
+    background: linear-gradient(135deg, #1a0a2e 0%, #2d1060 50%, #1a0a2e 100%);
+    color: #fff;
+    border-radius: 12px;
+    padding: 3rem 2.5rem 2.5rem;
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+  .cover .shield { font-size: 3.5rem; margin-bottom: 0.6rem; }
+  .cover h1 {
+    font-size: 1.55rem;
+    font-weight: 700;
+    color: #e8d0ff;
+    margin-bottom: 0.3rem;
+    line-height: 1.3;
+  }
+  .cover .subtitle {
+    font-size: 0.95rem;
+    color: #c090f0;
+    margin-bottom: 1.8rem;
+  }
+  .cover-meta {
+    display: inline-block;
+    text-align: left;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 8px;
+    padding: 1rem 1.5rem;
+    font-size: 0.88rem;
+    line-height: 2;
+    color: #ddd;
+  }
+  .cover-meta strong { color: #e8d0ff; }
+
+  /* ── TOC ── */
+  .toc {
+    background: #f7f8fa;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+  .toc h2 { font-size: 0.9rem; color: #57606a; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.8rem; }
+  .toc ol { padding-left: 1.4rem; }
+  .toc li { font-size: 0.88rem; color: #3b82d4; margin-bottom: 0.2rem; }
+
+  /* ── SECTIONS ── */
+  .section { margin-bottom: 2.5rem; }
+  h2.sec {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #1f2328;
+    border-left: 4px solid #9b59b6;
+    padding-left: 0.75rem;
+    margin-bottom: 1rem;
+    margin-top: 0;
+  }
+  h3.sub {
+    font-size: 0.97rem;
+    font-weight: 600;
+    color: #3b1f6a;
+    margin: 1.1rem 0 0.5rem;
+  }
+  h4.sub2 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #57606a;
+    margin: 0.9rem 0 0.4rem;
+  }
+  p { margin-bottom: 0.75rem; color: #1f2328; }
+  ul, ol { padding-left: 1.5rem; margin-bottom: 0.75rem; }
+  li { margin-bottom: 0.25rem; }
+
+  /* ── INFO BOXES ── */
+  .box {
+    border-radius: 8px;
+    padding: 0.9rem 1.1rem;
+    margin: 0.75rem 0 1rem;
+    font-size: 0.9rem;
+    line-height: 1.65;
+  }
+  .box-purple { background: #f5f0ff; border-left: 4px solid #9b59b6; }
+  .box-pink   { background: #fff0f6; border-left: 4px solid #e91e8c; }
+  .box-grey   { background: #f7f8fa; border-left: 4px solid #8b949e; }
+  .box-red    { background: #fff5f5; border-left: 4px solid #e74c3c; }
+  .box-amber  { background: #fffbf0; border-left: 4px solid #f39c12; }
+  .box-green  { background: #f0fff6; border-left: 4px solid #27ae60; }
+
+  /* ── TABLES ── */
+  table { width: 100%; border-collapse: collapse; margin: 0.75rem 0 1rem; font-size: 0.86rem; }
+  th {
+    background: #f0ebff;
+    color: #3b1f6a;
+    font-weight: 600;
+    padding: 0.55rem 0.75rem;
+    text-align: left;
+    border: 1px solid #ddd;
+  }
+  td { padding: 0.5rem 0.75rem; border: 1px solid #e5e7eb; vertical-align: top; }
+  tr:nth-child(even) td { background: #fafafa; }
+
+  /* ── CODE / PRE ── */
+  pre, code {
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 0.82rem;
+    background: #f6f8fa;
+    border: 1px solid #e5e7eb;
+    border-radius: 5px;
+  }
+  pre { padding: 0.9rem 1rem; overflow-x: auto; margin: 0.75rem 0 1rem; }
+  code { padding: 0.1rem 0.35rem; }
+
+  /* ── VERDICT CHIPS ── */
+  .chip {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    margin-right: 0.4rem;
+  }
+  .chip-green  { background: #d4edda; color: #155724; }
+  .chip-amber  { background: #fff3cd; color: #856404; }
+  .chip-red    { background: #f8d7da; color: #721c24; }
+
+  /* ── ARCH DIAGRAM ── */
+  .arch {
+    background: #1a0a2e;
+    color: #c8b8e8;
+    border-radius: 8px;
+    padding: 1.2rem;
+    font-family: "Consolas", monospace;
+    font-size: 0.78rem;
+    line-height: 1.6;
+    overflow-x: auto;
+    margin: 0.75rem 0 1rem;
+  }
+
+  /* ── SCREENSHOT PLACEHOLDER ── */
+  .screenshot-ph {
+    background: #f7f8fa;
+    border: 2px dashed #c8c8d0;
+    border-radius: 8px;
+    padding: 1.2rem;
+    text-align: center;
+    color: #57606a;
+    font-size: 0.86rem;
+    margin: 0.6rem 0;
+  }
+
+  /* ── DIVIDER ── */
+  hr { border: none; border-top: 1px solid #e5e7eb; margin: 2rem 0; }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    font-size: 0.76rem;
+    color: #57606a;
+    border-top: 1px solid #e5e7eb;
+    padding-top: 1rem;
+    margin-top: 2rem;
+  }
+
+  @media print {
+    body { font-size: 12px; }
+    .page { padding: 1rem; }
+    .cover { break-after: page; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  
+  <div class="cover">
+    <div class="shield">🛡️</div>
+    <h1>Suraksha Sakhi</h1>
+    <div class="subtitle">A Cam Phishing Awareness and Protection Prototype</div>
+    <div class="cover-meta">
+      <div><strong>Submitted by:</strong> Divyalaxmi Mahendra Lad</div>
+      <div><strong>Class &amp; Branch:</strong> S.E. CSE (Cybersecurity)</div>
+      <div><strong>Institute:</strong> Finolex Academy of Management and Technology,<br />                    Ratnagiri, Maharashtra</div>
+      <div><strong>Program:</strong> IBM Cybersecurity Bootcamp</div>
+      <div><strong>Date:</strong> 31 October 2026</div>
+    </div>
+  </div>
+
+  
+  <div class="toc">
+    <h2>Table of Contents</h2>
+    <ol>
+      <li>Abstract</li>
+      <li>Introduction</li>
+      <li>Problem Statement</li>
+      <li>Objectives</li>
+      <li>Scope and Limitations</li>
+      <li>Existing Solutions and Their Gaps</li>
+      <li>Proposed Solution</li>
+      <li>System Architecture</li>
+      <li>Technologies Used</li>
+      <li>Modules (10.1 – 10.7)</li>
+      <li>Implementation Details</li>
+      <li>Testing</li>
+      <li>Results and Screenshots</li>
+      <li>Ethical Considerations</li>
+      <li>Future Scope</li>
+      <li>Conclusion</li>
+      <li>References</li>
+      <li>Acknowledgement</li>
+    </ol>
+  </div>
+
+  
+  <div class="section">
+    <h2 class="sec">1. Abstract</h2>
+    <p>Cam phishing is a growing form of online blackmail in which attackers trick women and girls into sharing private images or turning on their webcam, and then use that material to threaten or extort them. Most victims do not know how to identify a suspicious link, detect hidden location data in a photo, or report the crime. <strong>Suraksha Sakhi</strong> is an interactive web dashboard built with Python and Streamlit to raise awareness of these threats and demonstrate practical protective techniques. The prototype includes a rule-based URL checker, a simulated link-history table, camera-permission alert simulation, a photo EXIF metadata reader and cleaner, safety charts, and a step-by-step victim-support guide. All data displayed in the app is entirely fictional. No machine learning, no real network requests, and no external APIs are used. The project was developed individually as part of the IBM Cybersecurity Bootcamp using IBM Bob as the development assistant.</p>
+  </div>
+
+  <hr />
+
+  
+  <div class="section">
+    <h2 class="sec">2. Introduction</h2>
+    <p>The internet has created new forms of crime that specifically target women and girls. One of the most harmful is <strong>cam phishing</strong> — a trap where an attacker builds a false sense of trust online, persuades a victim to join a video call or share private images, records or captures that material, and then uses it as leverage for blackmail.</p>
+    <p>Victims of cam phishing are often very young, unfamiliar with cybersecurity, and too afraid or embarrassed to seek help. They may not recognise that a link is dangerous before they click it, or that a photo they are sharing contains their home address embedded invisibly as metadata.</p>
+    <p><strong>Suraksha Sakhi</strong> (meaning "safety companion" in Hindi) is a beginner-friendly Streamlit web dashboard designed to address this gap. It puts protective tools and clear guidance in one place, presented in simple language that any student can understand and use without a cybersecurity background.</p>
+  </div>
+
+  <hr />
+
+  
+  <div class="section">
+    <h2 class="sec">3. Problem Statement</h2>
+    <p>Young women and girls who receive suspicious links or video-call requests through WhatsApp, Instagram, SMS, or email have no easy way to:</p>
+    <ul>
+      <li>Check whether a link is likely to be a phishing trap before opening it.</li>
+      <li>Understand that photos shared online can carry invisible GPS location data.</li>
+      <li>Know what steps to take if they have already been targeted.</li>
+      <li>Find the correct helpline or reporting portal quickly.</li>
+    </ul>
+    <p>Existing safety awareness content is either too technical for beginners, scattered across different websites, or targeted at adults with prior cybersecurity knowledge. There is no single beginner-friendly tool that combines threat detection, data privacy education, and victim-support guidance in one place.</p>
+  </div>
+
+  <hr />
+
+  
+  <div class="section">
+    <h2 class="sec">4. Objectives</h2>
+    <ol>
+      <li>To build an interactive web dashboard that demonstrates cam phishing awareness in a format suitable for students and young women.</li>
+      <li>To implement a rule-based URL checker that analyses a pasted link for five categories of phishing signals without connecting to the internet.</li>
+      <li>To display and filter fictional link-history and camera-alert records to show how a real monitoring tool might look.</li>
+      <li>To provide a working EXIF metadata reader that detects GPS location, device model, and date information hidden inside uploaded photos, and produces a clean metadata-free copy for safe sharing.</li>
+      <li>To present a clear, calm, step-by-step guide for users who have already been targeted, including the official cybercrime helpline number (1930) and the reporting portal (cybercrime.gov.in).</li>
+      <li>To package everything in a single Python file with beginner-readable comments, so that it can be understood and extended by any student.</li>
+    </ol>
+  </div>
+
+  <hr />
+
+  
+  <div class="section">
+    <h2 class="sec">5. Scope and Limitations</h2>
+    <h3 class="sub">Scope</h3>
+    <ul>
+      <li>The prototype runs entirely in a web browser via Streamlit.</li>
+      <li>All features work offline — no internet connection is required after installing the dependencies.</li>
+      <li>The app is designed for educational and awareness purposes, not as a production security tool.</li>
+      <li>Photo metadata processing happens in memory; no files are stored or sent anywhere.</li>
+    </ul>
+    <h3 class="sub">Limitations</h3>
+    <ul>
+      <li>The link checker uses simple Python rules, not machine learning or real threat intelligence feeds. It may miss sophisticated phishing URLs.</li>
+      <li>The link-history and camera-alert data are entirely fictional and hardcoded — they do not come from a real phone or network.</li>
+      <li>The app is a web prototype and cannot access phone OS permission APIs (Android Accessibility Service or iOS Privacy Report).</li>
+      <li>No user login, database, or persistent storage is used.</li>
+      <li>The app does not scan links automatically in real time; the user must paste a URL manually.</li>
+    </ul>
+  </div>
+
+  <hr />
+
+  
+  <div class="section">
+    <h2 class="sec">6. Existing Solutions and Their Gaps</h2>
+    <p>Several tools and services address parts of the cam phishing problem:</p>
+    <div class="box box-grey"><strong>URL Scanners (e.g., VirusTotal, Google Safe Browsing):</strong> These are powerful but require an internet connection, an API key, and some technical knowledge. They are not designed for a beginner who has just received a suspicious link on WhatsApp and needs an instant plain-language answer.</div>
+    <div class="box box-grey"><strong>Platform Safety Reports (e.g., Instagram Safety Centre, WhatsApp Help):</strong> These provide general guidance but are fragmented across different apps and written for a broad global audience, not specifically for young Indian women targeted by cam phishing.</div>
+    <div class="box box-grey"><strong>Cybercrime Reporting Portals (cybercrime.gov.in, helpline 1930):</strong> These are essential resources, but they are designed for reporting after the crime has already happened. They do not provide pre-emptive detection or awareness tools.</div>
+    <div class="box box-grey"><strong>Photo Metadata Strippers:</strong> Some desktop tools can strip EXIF data, but they require the user to already know what EXIF metadata is. Most young users are unaware that their shared photos contain GPS coordinates.</div>
+    <div class="box box-purple"><strong>Gap:</strong> None of the above solutions combine link detection, photo safety, victim guidance, and safety education in a single beginner-friendly, offline-capable interface designed specifically for the cam phishing threat.</div>
+  </div>
+
+  <hr />
+
+  
+  <div class="section">
+    <h2 class="sec">7. Proposed Solution</h2>
+    <p>Suraksha Sakhi is a single-file Python web application built with Streamlit. It provides eight interactive pages accessible from a sidebar navigation menu:</p>
+    <table>
+      <tr><th>Page</th><th>What it does</th></tr>
+      <tr><td>🏠 Dashboard</td><td>Four live KPI cards: Links Checked, Safe Links, Suspicious Links, Camera Alerts</td></tr>
+      <tr><td>🔍 Link Checker</td><td>Rule-based URL analysis — five checks, a risk score, and a plain-language verdict</td></tr>
+      <tr><td>📋 Link History</td><td>Filterable table of 20 fictional link records with colour-coded results</td></tr>
+      <tr><td>📷 Camera Alerts</td><td>10 simulated camera/mic/gallery permission events with a risk-level filter</td></tr>
+      <tr><td>🖼️ Photo Safety</td><td>EXIF reader, GPS detector, and Make Safe to Share (metadata stripper)</td></tr>
+      <tr><td>📊 Charts</td><td>Two bar charts: link results breakdown and risky links by source platform</td></tr>
+      <tr><td>❓ Help &amp; Tips</td><td>6-step victim guide (helpline 1930, cybercrime.gov.in) and 6 safety tips</td></tr>
+      <tr><td>ℹ️ About</td><td>Problem statement, prototype note, and future scope</td></tr>
+    </table>
+    <p>The entire prototype is contained in one file (<code>app.py</code>) with plain-English comments throughout, so it can serve both as a working tool and as a learning resource for other students.</p>
+  </div>
+
+  <hr />
+
+  
+  <div class="section">
+    <h2 class="sec">8. System Architecture</h2>
+    <h3 class="sub">Flow Description</h3>
+    <div class="arch">User opens the app in a browser (http://localhost:8501)
+         |
+         v
+Streamlit renders the sidebar navigation menu
+         |
+         v
+User selects a page  (e.g., "Link Checker")
+         |
+         v
+The corresponding page block runs inside app.py
+         |
+   +-----+-----+-----+-----+-----+-----+-----+-----+
+   |     |     |     |     |     |     |     |     |
+ Dash  Link  Link  Cam  Photo Chart Help About
+board Check Hist Alert Safe        Tips
+         |                   |
+         v                   v
+    check_link()        Pillow EXIF
+    5 rule checks       reader / strip
+         |
+         v
+All results stored in st.session_state (in-memory, no database)
+         |
+         v
+Page rerenders — user sees the result instantly</div>
+    <h3 class="sub">Key Design Decisions</h3>
+    <ul>
+      <li><strong>Single file:</strong> Everything is in <code>app.py</code>. No separate modules, databases, or configuration files. This keeps the project easy to read and run for beginners.</li>
+      <li><strong>No internet calls:</strong> The link checker, charts, and tables all run on locally stored data or user input. No external API requests are made.</li>
+      <li><strong>In-memory photo processing:</strong> Uploaded photos are opened with Pillow into a Python <code>io.BytesIO</code> object. They are never written to disk or sent to a server.</li>
+      <li><strong>Session state:</strong> <code>st.session_state</code> persists counters and the last link-check result across Streamlit's automatic reruns after button clicks.</li>
+    </ul>
+  </div>
+
+  <hr />
+
+  
+  <div class="section">
+    <h2 class="sec">9. Technologies Used</h2>
+    <table>
+      <tr><th>Technology</th><th>Version</th><th>Purpose</th></tr>
+      <tr><td>Python</td><td>3.8+</td><td>Core programming language</td></tr>
+      <tr><td>Streamlit</td><td>Latest stable</td><td>Web dashboard framework — renders UI, handles user input</td></tr>
+      <tr><td>Pandas</td><td>Latest stable</td><td>Creates and filters DataFrames for the history and alert tables</td></tr>
+      <tr><td>Pillow (PIL)</td><td>Latest stable</td><td>Opens images, reads EXIF metadata, saves clean copies</td></tr>
+      <tr><td><code>re</code> (stdlib)</td><td>Built-in</td><td>Regular expressions for IP-address detection in the link checker</td></tr>
+      <tr><td><code>io</code> (stdlib)</td><td>Built-in</td><td>In-memory file objects for photo processing without disk I/O</td></tr>
+      <tr><td>IBM Bob</td><td>—</td><td>AI development assistant used to write, review, and debug the code during the IBM Cybersecurity Bootcamp</td></tr>
+    </table>
+  </div>
+
+  <hr />
+
+  
+  <div class="section">
+    <h2 class="sec">10. Modules</h2>
+
+    <h3 class="sub">10.1 Dashboard 🏠</h3>
+    <p>The Dashboard page is the first thing the user sees. It displays four KPI (Key Performance Indicator) cards in a row. Values are derived from the in-memory DataFrames plus any links checked during the session.</p>
+    <table>
+      <tr><th>Card</th><th>Value source</th></tr>
+      <tr><td>🔗 Links Checked</td><td>Length of link_history DataFrame + extra checks via Link Checker</td></tr>
+      <tr><td>✅ Safe Links</td><td>Count of "Safe" rows in link_history + extra safe checks</td></tr>
+      <tr><td>⚠️ Suspicious Links</td><td>Count of non-Safe rows in link_history + extra suspicious checks</td></tr>
+      <tr><td>📷 Camera Alerts</td><td>Count of "High" risk rows in the cam_alerts DataFrame</td></tr>
+    </table>
+    <p>A cam-phishing explainer box appears above the cards. All values are derived from fictional in-memory data.</p>
+
+    <h3 class="sub">10.2 Link Checker 🔍</h3>
+    <p>The Link Checker lets the user paste any URL and click <strong>Check Link</strong>. The <code>check_link()</code> function applies five categories of rules and returns a risk score, a verdict, and a plain-language explanation.</p>
+    <h4 class="sub2">Rules, Scores, and Thresholds</h4>
+    <table>
+      <tr><th>Rule</th><th>Condition</th><th>Score</th></tr>
+      <tr><td>1 — URL Shortener</td><td>URL contains bit.ly, tinyurl.com, t.co, goo.gl, ow.ly, buff.ly, is.gd, rb.gy, or cutt.ly</td><td>+30</td></tr>
+      <tr><td>2 — HTTP (not HTTPS)</td><td>URL starts with <code>http://</code></td><td>+25</td></tr>
+      <tr><td>3 — IP Address</td><td>URL matches regex <code>https?://(\d{1,3}\.){3}\d{1,3}</code></td><td>+35</td></tr>
+      <tr><td>4 — Dangerous Keywords</td><td>URL contains any of: free, verify, login, prize, camera, webcam, winner, claim, reward, urgent</td><td>+20 per keyword</td></tr>
+      <tr><td>5a — Very Long URL</td><td>URL length &gt; 75 characters</td><td>+15</td></tr>
+      <tr><td>5b — Too Many Hyphens</td><td>URL contains more than 3 hyphens</td><td>+10 per extra hyphen</td></tr>
+    </table>
+    <h4 class="sub2">Verdict Thresholds</h4>
+    <table>
+      <tr><th>Score Range</th><th>Verdict</th><th>Meaning</th></tr>
+      <tr><td>0 – 19</td><td><span class="chip chip-green">✅ Safe</span></td><td>No significant risk signals detected</td></tr>
+      <tr><td>20 – 49</td><td><span class="chip chip-amber">⚠️ Suspicious</span></td><td>One or more mild risk signals; proceed with caution</td></tr>
+      <tr><td>50 +</td><td><span class="chip chip-red">🚨 Dangerous</span></td><td>Multiple strong risk signals; do not open this link</td></tr>
+    </table>
+    <div class="box box-grey"><strong>Note on session state:</strong> Streamlit reruns the entire script on every button click. The result is saved to <code>st.session_state.last_result</code> and rendered in a separate block that runs on every page load, so the verdict is never wiped by the rerun.</div>
+
+    <h3 class="sub">10.3 Link History 📋</h3>
+    <p>Shows a filterable table of 20 fictional link records produced by <code>make_history()</code>. Each record has: <strong>Time</strong>, <strong>Source</strong> (WhatsApp, Instagram, SMS, Email), <strong>Link</strong>, <strong>Result</strong> (Safe / Suspicious / Dangerous). A deliberate cluster of Suspicious and Dangerous links from WhatsApp is included so the Charts page can demonstrate platform-level pattern detection. A Generate Sample Data button refreshes the table. The Result column is colour-coded using a pandas Styler.</p>
+
+    <h3 class="sub">10.4 Camera Safety Alerts 📷</h3>
+    <p>Simulates 10 camera, microphone, and gallery permission events produced by <code>make_cam_alerts()</code>. Each record has: <strong>Time</strong>, <strong>App / Site</strong>, <strong>Permission</strong>, <strong>Risk</strong> (High 5 / Medium 3 / Low 2), <strong>Reason</strong>. A Risk filter dropdown filters rows while preserving colour coding. A simulation disclaimer clearly states all events are fictional.</p>
+
+    <h3 class="sub">10.5 Photo Safety 🖼️</h3>
+    <p>The user uploads a JPG or PNG. Pillow calls <code>_getexif()</code> to extract raw EXIF tags, which are mapped to names using <code>PIL.ExifTags.TAGS</code>. Three specific risks are checked:</p>
+    <ol>
+      <li><span class="chip chip-red">🚨</span> <strong>GPS location</strong> (<code>GPSInfo</code> tag) — reveals where the photo was taken.</li>
+      <li><span class="chip chip-amber">⚠️</span> <strong>Device model</strong> (<code>Make</code> / <code>Model</code> tags) — reveals the phone or camera used.</li>
+      <li><span class="chip chip-amber">⚠️</span> <strong>Date and time</strong> (<code>DateTimeOriginal</code> / <code>DateTime</code>) — reveals when the photo was taken.</li>
+    </ol>
+    <p>The <strong>Make Safe to Share</strong> button converts the image to RGB, saves it to <code>io.BytesIO</code> without metadata, and presents a download button. The original file is never modified.</p>
+
+    <h3 class="sub">10.6 Charts and Filters 📊</h3>
+    <p>Two bar charts built from the link_history DataFrame using <code>st.bar_chart()</code>:</p>
+    <ol>
+      <li><strong>Link Results Breakdown</strong> — Safe / Suspicious / Dangerous counts in a fixed order using <code>pandas.Series.reindex()</code>.</li>
+      <li><strong>Risky Links by Source</strong> — count of non-Safe links per source platform.</li>
+    </ol>
+    <p>A plain-language caption below each chart explains what a healthy or unhealthy pattern looks like.</p>
+
+    <h3 class="sub">10.7 Help and Tips ❓</h3>
+    <p><strong>What To Do If You're Targeted</strong> — Six collapsible <code>st.expander()</code> steps: (1) Stay calm; (2) Do not pay; (3) Screenshot everything; (4) Block and report; (5) Tell a trusted person; (6) Report to cybercrime.gov.in or call 1930 (emergency: 112). A legal disclaimer box states this is general awareness guidance only.</p>
+    <p><strong>Safety Tips</strong> — Six styled cards in two columns: cover your camera; don't open unknown video-call links; check app permissions; don't share personal photos with strangers; turn off GPS tagging; use strong passwords and 2FA.</p>
+  </div>
+
+  <hr />
+
+  
+  <div class="section">
+    <h2 class="sec">11. Implementation Details</h2>
+    <h3 class="sub">File Structure</h3>
+    <pre>app.py              — All application code (~900 lines with comments)
+requirements.txt    — streamlit, pandas, pillow
+README.md           — Installation and usage instructions
+PROJECT_REPORT.md   — Written project report</pre>
+    <h3 class="sub">Code Organisation inside app.py</h3>
+    <pre>1. Imports  (streamlit, re, pandas, io, PIL)
+2. Page config and CSS  (dark theme, purple/pink accent)
+3. Sidebar — st.sidebar.radio() navigation (8 pages)
+4. Data functions: make_history(), make_cam_alerts()
+5. Session state initialisation
+6. Link checker logic: check_link()
+7. Page helper: page_header()
+8. Page blocks (if / elif):
+   Dashboard · Link Checker · Link History
+   Camera Alerts · Photo Safety · Charts
+   Help &amp; Tips · About
+9. Shared footer caption</pre>
+    <h3 class="sub">Dark Theme Colour Palette</h3>
+    <table>
+      <tr><th>Role</th><th>Hex Value</th></tr>
+      <tr><td>Background</td><td><code>#0f0f1a</code> (very dark navy)</td></tr>
+      <tr><td>Surface / cards</td><td><code>#1c1c30</code></td></tr>
+      <tr><td>Text</td><td><code>#e8e8f0</code></td></tr>
+      <tr><td>Purple accent</td><td><code>#9b59b6</code></td></tr>
+      <tr><td>Pink accent</td><td><code>#e91e8c</code></td></tr>
+      <tr><td>Muted label</td><td><code>#a88fc8</code></td></tr>
+    </table>
+  </div>
+
+  <hr />
+
+  
+  <div class="section">
+    <h2 class="sec">12. Testing</h2>
+    <p>All tests were performed manually in the browser. The link checker logic was also verified by running isolated Python assertions from the command line.</p>
+    <table>
+      <tr><th>#</th><th>Test</th><th>Input</th><th>Expected</th><th>Result</th></tr>
+      <tr><td>1</td><td>Safe HTTPS link</td><td><code>https://www.google.com</code></td><td>Score 0, Verdict: Safe</td><td>✅ Pass</td></tr>
+      <tr><td>2</td><td>HTTP (no HTTPS)</td><td><code>http://www.example.com</code></td><td>Score 25, Suspicious</td><td>✅ Pass</td></tr>
+      <tr><td>3</td><td>Raw IP address</td><td><code>http://192.168.1.1/login</code></td><td>Score 60, Dangerous</td><td>✅ Pass</td></tr>
+      <tr><td>4</td><td>URL shortener</td><td><code>https://bit.ly/xyz</code></td><td>Score 30, Suspicious</td><td>✅ Pass</td></tr>
+      <tr><td>5</td><td>Multiple keywords + hyphens</td><td><code>https://free-prize-claim-winner.example/verify</code></td><td>Score ≥ 50, Dangerous</td><td>✅ Pass</td></tr>
+      <tr><td>6</td><td>Long URL only</td><td>URL &gt; 75 chars, no other flags</td><td>Score 15, Suspicious</td><td>✅ Pass</td></tr>
+      <tr><td>7</td><td>Empty input</td><td>(blank)</td><td>Warning message shown</td><td>✅ Pass</td></tr>
+      <tr><td>8</td><td>Generate Sample Data</td><td>Click button</td><td>Table reloads with 20 rows</td><td>✅ Pass</td></tr>
+      <tr><td>9</td><td>Filter Result = "Dangerous"</td><td>Select in dropdown</td><td>Only Dangerous rows shown</td><td>✅ Pass</td></tr>
+      <tr><td>10</td><td>Filter Risk = "High"</td><td>Select in dropdown</td><td>Only High rows shown, colours preserved</td><td>✅ Pass</td></tr>
+      <tr><td>11</td><td>PNG with no EXIF</td><td>Upload MS Paint PNG</td><td>"No hidden EXIF metadata found"</td><td>✅ Pass</td></tr>
+      <tr><td>12</td><td>Make Safe to Share</td><td>Click button after upload</td><td>Clean image + download button appear</td><td>✅ Pass</td></tr>
+      <tr><td>13</td><td>Dashboard KPI update</td><td>Check one link, go to Dashboard</td><td>Links Checked count +1</td><td>✅ Pass</td></tr>
+      <tr><td>14</td><td>Charts with data</td><td>After generating sample data</td><td>Two bar charts render correctly</td><td>✅ Pass</td></tr>
+      <tr><td>15</td><td>Charts — empty data guard</td><td>Empty history DataFrame</td><td>Friendly info message shown</td><td>✅ Pass</td></tr>
+    </table>
+  </div>
+
+  <hr />
+
+  
+  <div class="section">
+    <h2 class="sec">13. Results and Screenshots</h2>
+    <p>The prototype runs successfully using: <code>python -m streamlit run app.py</code></p>
+    <div class="screenshot-ph">📸 [Insert screenshot of Dashboard with four KPI cards]</div>
+    <div class="screenshot-ph">📸 [Insert screenshot of Link Checker — Dangerous verdict for <code>http://192.168.1.1/login</code>]</div>
+    <div class="screenshot-ph">📸 [Insert screenshot of Link History with "Dangerous" filter applied]</div>
+    <div class="screenshot-ph">📸 [Insert screenshot of Camera Alerts with "High" risk filter applied]</div>
+    <div class="screenshot-ph">📸 [Insert screenshot of Photo Safety — GPS location warning]</div>
+    <div class="screenshot-ph">📸 [Insert screenshot of Photo Safety — after clicking Make Safe to Share]</div>
+    <div class="screenshot-ph">📸 [Insert screenshot of Charts page — two bar charts]</div>
+    <div class="screenshot-ph">📸 [Insert screenshot of Help &amp; Tips — Step 6 expander open]</div>
+    <div class="screenshot-ph">📸 [Insert screenshot of About page — Future Scope section]</div>
+  </div>
+
+  <hr />
+
+  
+  <div class="section">
+    <h2 class="sec">14. Ethical Considerations</h2>
+    <div class="box box-green"><strong>1. All data is fictional.</strong> Every link, IP address, domain name, and app name shown is completely invented. All <code>.example</code> domains are reserved by IANA and will never resolve to a real website.</div>
+    <div class="box box-green"><strong>2. No real surveillance.</strong> The app does not monitor real network traffic, read real phone permissions, or interact with any external system. It demonstrates what a real safety tool could look like — it is not a surveillance tool.</div>
+    <div class="box box-amber"><strong>3. Suspicious patterns do not prove an attack.</strong> The Camera Safety Alerts section includes a clear disclaimer. Users should verify through official channels before taking action.</div>
+    <div class="box box-green"><strong>4. Photos are processed in memory only.</strong> Uploaded photos are opened into a Python <code>io.BytesIO</code> object in RAM. They are never written to disk, sent to a server, or logged. The original file is never modified.</div>
+    <div class="box box-pink"><strong>5. Supportive tone for victims.</strong> The Help &amp; Tips section uses calm, non-judgmental language, states that the crime is the attacker's fault, and provides real official resources (1930, cybercrime.gov.in, 112) rather than invented ones.</div>
+  </div>
+
+  <hr />
+
+  
+  <div class="section">
+    <h2 class="sec">15. Future Scope</h2>
+    <table>
+      <tr><th>Feature</th><th>Description</th></tr>
+      <tr><td>📱 Always-Active Android App</td><td>A background Foreground Service that intercepts links in any messaging app before the user taps them, using the same rule-based checker adapted as a native Android library.</td></tr>
+      <tr><td>🎥 Real Camera &amp; Mic Monitoring</td><td>Integration with Android Accessibility Service or iOS App Privacy Report to detect when any app accesses the camera or microphone without the user's active consent.</td></tr>
+      <tr><td>🖼️ Gallery Protection</td><td>Automatic background scan of the device's photo gallery that flags images with GPS metadata and offers one-tap stripping before sharing.</td></tr>
+      <tr><td>🔗 Link Scanner in Messaging Apps</td><td>A keyboard extension or Android Share Sheet plugin that runs the link checker inline inside WhatsApp, Telegram, SMS, or email — no copy-paste required.</td></tr>
+    </table>
+  </div>
+
+  <hr />
+
+  
+  <div class="section">
+    <h2 class="sec">16. Conclusion</h2>
+    <p>Cam phishing is a real and growing threat to women and girls online. Most victims lack both the tools and the awareness to protect themselves before harm occurs. Suraksha Sakhi demonstrates that even a small, single-file Python application can provide meaningful educational value: teaching users to identify dangerous links, understand hidden photo metadata, and know exactly where to report a crime.</p>
+    <p>The prototype was built entirely with free, open-source tools — Python, Streamlit, Pandas, and Pillow — and developed with the assistance of IBM Bob during the IBM Cybersecurity Bootcamp. It is intentionally beginner-friendly, with plain-English comments throughout the code, so that it can serve as a learning resource for other students as well as a working demonstration.</p>
+    <div class="box box-grey">All data in the app is fictional. The project makes no claim to being a production-ready security tool. Its value lies in showing what is possible and in putting the right information in the hands of someone who needs it.</div>
+  </div>
+
+  <hr />
+
+  
+  <div class="section">
+    <h2 class="sec">17. References</h2>
+    <ol>
+      <li><strong>Streamlit Documentation</strong> — <a href="https://docs.streamlit.io">https://docs.streamlit.io</a><br />Official documentation for the Streamlit library used to build the web interface.</li>
+      <li style="margin-top:0.5rem"><strong>Pandas Documentation</strong> — <a href="https://pandas.pydata.org/docs/">https://pandas.pydata.org/docs/</a><br />Official documentation for the Pandas library used for tables and filters.</li>
+      <li style="margin-top:0.5rem"><strong>Pillow (PIL Fork) Documentation</strong> — <a href="https://pillow.readthedocs.io">https://pillow.readthedocs.io</a><br />Official documentation for the Pillow library used for EXIF reading and image processing.</li>
+      <li style="margin-top:0.5rem"><strong>Python <code>re</code> Module</strong> — <a href="https://docs.python.org/3/library/re.html">https://docs.python.org/3/library/re.html</a><br />Official Python documentation for regular expressions used in the link checker.</li>
+      <li style="margin-top:0.5rem"><strong>Python <code>io</code> Module</strong> — <a href="https://docs.python.org/3/library/io.html">https://docs.python.org/3/library/io.html</a><br />Official Python documentation for in-memory file I/O used for photo processing.</li>
+      <li style="margin-top:0.5rem"><strong>National Cybercrime Reporting Portal</strong> — <a href="https://cybercrime.gov.in">https://cybercrime.gov.in</a><br />India's official portal for reporting cybercrime, referenced in the Help &amp; Tips section.</li>
+      <li style="margin-top:0.5rem"><strong>National Cybercrime Helpline 1930</strong> — Ministry of Home Affairs, Government of India.<br />A 24×7 helpline for cybercrime victims, referenced in the Help &amp; Tips section.</li>
+      <li style="margin-top:0.5rem"><strong>IANA — Special-Use Domain Names</strong> — <a href="https://www.iana.org/domains/reserved">https://www.iana.org/domains/reserved</a><br />Confirms that <code>.example</code> domains are reserved and will never resolve to real websites.</li>
+    </ol>
+  </div>
+
+  <hr />
+
+  
+  <div class="section">
+    <h2 class="sec">18. Acknowledgement</h2>
+    <div class="box box-purple">
+      I would like to thank the <strong>IBM Cybersecurity Bootcamp</strong> for providing the opportunity, structure, and resources to build this project. The hands-on learning environment of the bootcamp made it possible to take an idea from concept to working prototype within a short time.<br /><br />
+      I would also like to thank <strong>IBM Bob</strong>, the AI development assistant, which supported every stage of building Suraksha Sakhi — from writing and reviewing code to explaining concepts, debugging errors, and helping structure this report. Working with IBM Bob throughout the bootcamp significantly accelerated the development process and helped maintain code quality.
+    </div>
+  </div>
+
+  
+  <div class="footer">
+    Suraksha Sakhi — Built with Python, Streamlit, and care for women's digital safety  ·  All data in this prototype is entirely fictional<br />
+    Made with IBM Bob
+  </div>
+
+</div>
+</body>
+</html>
